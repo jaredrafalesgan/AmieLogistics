@@ -14,10 +14,20 @@ HOW TO USE:
    /assets to your GHL Media Library and swap those <img src="...">
    URLs for the ones GHL gives you (search for
    "raw.githubusercontent.com" to find every spot that needs one).
-5. The About section photo is still a placeholder (search for
-   "REPLACE WITH ABOUT IMAGE") — send that image whenever you have
-   one and it can be wired in the same way.
-6. SEO (page title / meta description) is set in GoHighLevel's
+5. Two assets are still placeholders, pending the actual files:
+   - About section photo: search "REPLACE WITH ABOUT IMAGE".
+   - Hero background video: search "REPLACE-WITH-HERO-VIDEO-URL" —
+     it's a real <video> element already wired for autoplay/muted/
+     loop/subtle opacity behind the existing glow, just waiting on
+     a source file. Nothing breaks in the meantime; the hero simply
+     renders without the video layer, exactly as it does today.
+   Send either file and it can be wired in the same way as the
+   other assets.
+6. Testimonials are real markup driven by a small a1Testimonials
+   array in the <script> near the bottom of the page (search
+   "a1Testimonials") — edit name/review/rating there to swap in
+   real client reviews; the cards rebuild from that array alone.
+7. SEO (page title / meta description) is set in GoHighLevel's
    page settings, not inside this snippet, since a Custom Code
    element cannot contain <title>/<meta> tags. Suggested values:
      Title: A-1 Fantasybar LLC | Luxury Hair Salon in Dallas, TX
@@ -321,10 +331,34 @@ COPY STARTS HERE
   align-items: center;
   overflow: hidden;
   padding: 148px 0 64px;
+  background: var(--a1-black);
+}
+
+/* Cinematic background video layer — sits behind the dark/violet/pink
+   glow overlay below, which is what keeps it subtle. Tune visibility
+   with two knobs: this opacity value, and the overlay's rgba() darkness
+   a few rules down. Raise opacity a little if the video reads as barely
+   there; raise the overlay's alpha instead if it reads as too bright. */
+#a1-fantasybar-site .a1-hero-video {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.18;
+  pointer-events: none;
+}
+
+#a1-fantasybar-site .a1-hero-video-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
   background:
     radial-gradient(ellipse 60% 55% at 82% 88%, rgba(255,79,168,0.22) 0%, rgba(255,79,168,0) 70%),
     radial-gradient(ellipse 50% 45% at 8% 15%, rgba(255,79,168,0.10) 0%, rgba(255,79,168,0) 70%),
-    var(--a1-black);
+    rgba(10,10,11,0.55);
 }
 
 #a1-fantasybar-site .a1-hero-inner {
@@ -473,6 +507,53 @@ COPY STARTS HERE
   transform: translateY(-6px);
   border-color: rgba(255,79,168,0.5);
   box-shadow: 0 20px 40px rgba(255,79,168,0.12);
+}
+
+#a1-fantasybar-site .a1-service-icon {
+  position: relative;
+  width: 56px;
+  height: 56px;
+  margin: 0 auto 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+#a1-fantasybar-site .a1-service-icon-glow {
+  position: absolute;
+  inset: -8px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255,79,168,0.4) 0%, rgba(255,79,168,0) 72%);
+  filter: blur(3px);
+  transition: opacity 380ms var(--a1-ease);
+}
+
+#a1-fantasybar-site .a1-service-icon-svg {
+  position: relative;
+  width: 32px;
+  height: 32px;
+  fill: none;
+  stroke: url(#a1-icon-grad);
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  filter: drop-shadow(0 0 6px rgba(255,79,168,0.5));
+  transition: transform 380ms var(--a1-ease), filter 380ms var(--a1-ease);
+}
+
+#a1-fantasybar-site .a1-service-icon-svg .a1-icon-fill {
+  fill: url(#a1-icon-grad);
+  stroke: none;
+}
+
+#a1-fantasybar-site .a1-service-card:hover .a1-service-icon-svg {
+  transform: scale(1.08);
+  filter: drop-shadow(0 0 10px rgba(255,79,168,0.8));
+}
+
+#a1-fantasybar-site .a1-service-card:hover .a1-service-icon-glow {
+  opacity: 1.4;
 }
 
 #a1-fantasybar-site .a1-service-top {
@@ -639,6 +720,68 @@ COPY STARTS HERE
 
 #a1-fantasybar-site .a1-gallery-item .a1-placeholder-box { transition: transform 500ms var(--a1-ease); }
 
+/* Testimonials */
+#a1-fantasybar-site .a1-testimonial-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 24px;
+}
+
+#a1-fantasybar-site .a1-testimonial-card {
+  position: relative;
+  background: var(--a1-charcoal-2);
+  border: 1px solid var(--a1-line);
+  border-radius: var(--a1-radius);
+  padding: 34px 28px 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  overflow: hidden;
+  transition: transform 380ms var(--a1-ease), border-color 380ms var(--a1-ease), box-shadow 380ms var(--a1-ease);
+}
+
+#a1-fantasybar-site .a1-testimonial-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(255,79,168,0.4);
+  box-shadow: 0 20px 40px rgba(255,79,168,0.12);
+}
+
+#a1-fantasybar-site .a1-testimonial-quote {
+  position: absolute;
+  top: 6px;
+  right: 20px;
+  font-family: 'Playfair Display', serif;
+  font-size: 72px;
+  line-height: 1;
+  color: rgba(255,79,168,0.16);
+  pointer-events: none;
+}
+
+#a1-fantasybar-site .a1-testimonial-stars {
+  display: flex;
+  gap: 4px;
+  font-size: 15px;
+  color: rgba(246,245,243,0.2);
+}
+
+#a1-fantasybar-site .a1-star-filled { color: var(--a1-pink); }
+
+#a1-fantasybar-site .a1-testimonial-text {
+  font-size: 15px;
+  color: var(--a1-white-dim);
+  font-style: italic;
+  position: relative;
+}
+
+#a1-fantasybar-site .a1-testimonial-name {
+  font-family: 'Playfair Display', serif;
+  font-size: 16px;
+  color: var(--a1-white);
+  margin-top: auto;
+  padding-top: 14px;
+  border-top: 1px solid var(--a1-line);
+}
+
 /* Booking */
 #a1-fantasybar-site .a1-booking-panel {
   background: var(--a1-charcoal);
@@ -667,22 +810,44 @@ COPY STARTS HERE
 #a1-fantasybar-site .a1-booking-embed iframe { width: 100%; border: none; }
 
 /* Policies */
-#a1-fantasybar-site .a1-policy-banner {
-  background: linear-gradient(135deg, var(--a1-pink), var(--a1-pink-deep));
-  color: #1a0512;
+#a1-fantasybar-site .a1-policy-alert {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
   text-align: center;
-  padding: 20px 24px;
+  padding: 22px 28px;
   border-radius: 14px;
+  margin-bottom: 48px;
+  background: linear-gradient(135deg, rgba(255,79,168,0.14), rgba(224,57,154,0.05));
+  border: 1px solid rgba(255,79,168,0.4);
+  box-shadow: 0 0 36px rgba(255,79,168,0.14);
+}
+
+#a1-fantasybar-site .a1-policy-alert-icon {
+  flex-shrink: 0;
+  width: 30px;
+  height: 30px;
+  fill: none;
+  stroke: url(#a1-icon-grad);
+  stroke-width: 1.7;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  filter: drop-shadow(0 0 3px rgba(255,79,168,0.6));
+}
+
+#a1-fantasybar-site .a1-policy-alert-text {
   font-family: 'Playfair Display', serif;
-  font-size: clamp(18px, 3vw, 26px);
   font-weight: 700;
-  margin-bottom: 44px;
-  letter-spacing: 0.02em;
+  font-size: clamp(17px, 2.6vw, 23px);
+  color: var(--a1-pink);
+  letter-spacing: 0.01em;
 }
 
 #a1-fantasybar-site .a1-policy-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  grid-template-columns: repeat(2, 1fr);
+  align-items: start;
   gap: 22px;
 }
 
@@ -691,19 +856,45 @@ COPY STARTS HERE
   border: 1px solid var(--a1-line);
   border-left: 3px solid var(--a1-pink);
   border-radius: 12px;
-  padding: 26px;
+  padding: 28px;
+  transition: border-color 380ms var(--a1-ease), box-shadow 380ms var(--a1-ease), transform 380ms var(--a1-ease);
+}
+
+#a1-fantasybar-site .a1-policy-card:hover {
+  transform: translateY(-3px);
+  border-color: rgba(255,79,168,0.5);
+  box-shadow: 0 16px 32px rgba(255,79,168,0.1);
+}
+
+#a1-fantasybar-site .a1-policy-card-head {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+#a1-fantasybar-site .a1-policy-icon {
+  flex-shrink: 0;
+  width: 26px;
+  height: 26px;
+  fill: none;
+  stroke: url(#a1-icon-grad);
+  stroke-width: 1.7;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  filter: drop-shadow(0 0 2.5px rgba(255,79,168,0.5));
 }
 
 #a1-fantasybar-site .a1-policy-card h3 {
   font-size: 18px;
-  margin-bottom: 14px;
   color: var(--a1-white);
 }
 
-#a1-fantasybar-site .a1-policy-card ul { display: flex; flex-direction: column; gap: 10px; }
+#a1-fantasybar-site .a1-policy-card ul { display: flex; flex-direction: column; gap: 12px; }
 
 #a1-fantasybar-site .a1-policy-card li {
-  font-size: 14.5px;
+  font-size: 15px;
+  line-height: 1.55;
   color: var(--a1-white-dim);
   padding-left: 18px;
   position: relative;
@@ -935,6 +1126,7 @@ COPY STARTS HERE
   #a1-fantasybar-site .a1-hero-sub { margin-left: auto; margin-right: auto; }
   #a1-fantasybar-site .a1-hero-actions { justify-content: center; }
   #a1-fantasybar-site .a1-hero-visual { width: 68%; max-width: 320px; align-self: center; margin-top: 24px; }
+  #a1-fantasybar-site .a1-hero-video { opacity: 0.12; }
 }
 
 @media (max-width: 640px) {
@@ -942,8 +1134,11 @@ COPY STARTS HERE
   #a1-fantasybar-site .a1-hero-actions .a1-btn { width: 100%; }
   #a1-fantasybar-site .a1-hero-actions { flex-direction: column; }
   #a1-fantasybar-site .a1-hero-visual { width: 78%; max-width: 260px; }
-  #a1-fantasybar-site .a1-policy-banner { font-size: 17px; }
+  #a1-fantasybar-site .a1-policy-banner,
+  #a1-fantasybar-site .a1-policy-alert-text { font-size: 17px; }
   #a1-fantasybar-site .a1-logo-img { height: 40px; }
+  #a1-fantasybar-site .a1-policy-grid { grid-template-columns: 1fr; }
+  #a1-fantasybar-site .a1-testimonial-grid { grid-template-columns: 1fr; }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -953,6 +1148,7 @@ COPY STARTS HERE
     transition-duration: 0.01ms !important;
   }
   #a1-fantasybar-site .a1-hero-img { animation: none; }
+  #a1-fantasybar-site .a1-hero-video { display: none; }
 }
 </style>
 
@@ -996,6 +1192,14 @@ COPY STARTS HERE
 
 <!-- ============ HERO ============ -->
 <section class="a1-hero" id="a1-top">
+  <!-- REPLACE WITH HERO VIDEO: set the <source> src below to your uploaded
+       video's URL (e.g. after uploading it to your GHL Media Library).
+       Until then this <video> simply has nothing to play, so the hero
+       looks exactly as it does today (solid black + the glow overlay). -->
+  <video class="a1-hero-video" autoplay muted loop playsinline preload="auto" aria-hidden="true">
+    <source src="REPLACE-WITH-HERO-VIDEO-URL.mp4" type="video/mp4">
+  </video>
+  <div class="a1-hero-video-overlay" aria-hidden="true"></div>
   <div class="a1-hero-inner">
     <div class="a1-hero-content">
       <p class="a1-eyebrow a1-reveal">Where Beauty Meets Confidence</p>
@@ -1016,6 +1220,15 @@ COPY STARTS HERE
 
 <!-- ============ SERVICES ============ -->
 <section class="a1-section" id="a1-services">
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+    <defs>
+      <linearGradient id="a1-icon-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stop-color="#ff9fd0"/>
+        <stop offset="50%" stop-color="#ff4fa8"/>
+        <stop offset="100%" stop-color="#c92e86"/>
+      </linearGradient>
+    </defs>
+  </svg>
   <div class="a1-container">
     <div class="a1-section-head a1-reveal">
       <p class="a1-eyebrow">Menu</p>
@@ -1028,6 +1241,14 @@ COPY STARTS HERE
       <h3 class="a1-service-group-title a1-reveal">1:1 Classes</h3>
       <div class="a1-service-grid">
         <div class="a1-service-card a1-reveal">
+          <div class="a1-service-icon" aria-hidden="true">
+            <span class="a1-service-icon-glow"></span>
+            <svg class="a1-service-icon-svg" viewBox="0 0 48 48">
+              <line x1="14" y1="10" x2="34" y2="38"/>
+              <ellipse cx="16" cy="12" rx="2.4" ry="1.5" transform="rotate(-35 16 12)"/>
+              <path d="M16 12 C8 18 10 28 18 30 C26 32 22 40 14 40"/>
+            </svg>
+          </div>
           <div class="a1-service-top">
             <h4 class="a1-service-name">1:1 Wig Sewing Machine Class</h4>
             <span class="a1-service-price">$1,150.00</span>
@@ -1046,6 +1267,15 @@ COPY STARTS HERE
       <h3 class="a1-service-group-title a1-reveal">Closure Services</h3>
       <div class="a1-service-grid">
         <div class="a1-service-card a1-reveal">
+          <div class="a1-service-icon" aria-hidden="true">
+            <span class="a1-service-icon-glow"></span>
+            <svg class="a1-service-icon-svg" viewBox="0 0 48 48">
+              <path d="M14 12 Q24 6 34 12 L34 18 Q24 14 14 18 Z"/>
+              <path d="M18 18 C16 26 20 32 17 40"/>
+              <path d="M24 18 C24 26 26 32 24 40"/>
+              <path d="M30 18 C32 26 28 32 31 40"/>
+            </svg>
+          </div>
           <div class="a1-service-top">
             <h4 class="a1-service-name">Closure Quick Weave</h4>
             <span class="a1-service-price">$150.00</span>
@@ -1057,6 +1287,15 @@ COPY STARTS HERE
           <a href="#booking" class="a1-btn a1-btn-outline a1-service-book a1-book-btn">Book Now</a>
         </div>
         <div class="a1-service-card a1-reveal">
+          <div class="a1-service-icon" aria-hidden="true">
+            <span class="a1-service-icon-glow"></span>
+            <svg class="a1-service-icon-svg" viewBox="0 0 48 48">
+              <path d="M14 12 Q24 6 34 12 L34 18 Q24 14 14 18 Z"/>
+              <path d="M18 18 C16 26 20 32 17 40"/>
+              <path d="M24 18 C24 26 26 32 24 40"/>
+              <path d="M30 18 C32 26 28 32 31 40"/>
+            </svg>
+          </div>
           <div class="a1-service-top">
             <h4 class="a1-service-name">Closure Sew</h4>
             <span class="a1-service-price">$175.00</span>
@@ -1074,6 +1313,18 @@ COPY STARTS HERE
       <h3 class="a1-service-group-title a1-reveal">Frontal Services</h3>
       <div class="a1-service-grid">
         <div class="a1-service-card a1-reveal">
+          <div class="a1-service-icon" aria-hidden="true">
+            <span class="a1-service-icon-glow"></span>
+            <svg class="a1-service-icon-svg" viewBox="0 0 48 48">
+              <path d="M8 22 Q24 8 40 22"/>
+              <circle class="a1-icon-fill" cx="16" cy="17" r="1"/>
+              <circle class="a1-icon-fill" cx="24" cy="13.5" r="1"/>
+              <circle class="a1-icon-fill" cx="32" cy="17" r="1"/>
+              <path d="M14 22 C12 30 16 34 14 40"/>
+              <path d="M24 20 C24 28 26 34 24 40"/>
+              <path d="M34 22 C36 30 32 34 34 40"/>
+            </svg>
+          </div>
           <div class="a1-service-top">
             <h4 class="a1-service-name">Frontal Quick Weave</h4>
             <span class="a1-service-price">$165.00</span>
@@ -1085,6 +1336,18 @@ COPY STARTS HERE
           <a href="#booking" class="a1-btn a1-btn-outline a1-service-book a1-book-btn">Book Now</a>
         </div>
         <div class="a1-service-card a1-reveal">
+          <div class="a1-service-icon" aria-hidden="true">
+            <span class="a1-service-icon-glow"></span>
+            <svg class="a1-service-icon-svg" viewBox="0 0 48 48">
+              <path d="M8 22 Q24 8 40 22"/>
+              <circle class="a1-icon-fill" cx="16" cy="17" r="1"/>
+              <circle class="a1-icon-fill" cx="24" cy="13.5" r="1"/>
+              <circle class="a1-icon-fill" cx="32" cy="17" r="1"/>
+              <path d="M14 22 C12 30 16 34 14 40"/>
+              <path d="M24 20 C24 28 26 34 24 40"/>
+              <path d="M34 22 C36 30 32 34 34 40"/>
+            </svg>
+          </div>
           <div class="a1-service-top">
             <h4 class="a1-service-name">Frontal Sew In Install</h4>
             <span class="a1-service-price">$185.00</span>
@@ -1102,6 +1365,16 @@ COPY STARTS HERE
       <h3 class="a1-service-group-title a1-reveal">X-Mas Wig Install</h3>
       <div class="a1-service-grid">
         <div class="a1-service-card a1-reveal">
+          <div class="a1-service-icon" aria-hidden="true">
+            <span class="a1-service-icon-glow"></span>
+            <svg class="a1-service-icon-svg" viewBox="0 0 48 48">
+              <path d="M14 20 Q24 6 34 20"/>
+              <path d="M14 20 C10 26 16 30 12 38"/>
+              <path d="M34 20 C38 26 32 30 36 38"/>
+              <path d="M24 18 C22 26 26 32 24 40"/>
+              <path class="a1-icon-fill" d="M24 2 L25.2 6 L29 7.2 L25.2 8.4 L24 12.4 L22.8 8.4 L19 7.2 L22.8 6 Z"/>
+            </svg>
+          </div>
           <div class="a1-service-top">
             <h4 class="a1-service-name">Wig Install</h4>
             <span class="a1-service-price">$100.00</span>
@@ -1161,6 +1434,22 @@ COPY STARTS HERE
   </div>
 </section>
 
+<!-- ============ TESTIMONIALS ============ -->
+<section class="a1-section" id="a1-testimonials">
+  <div class="a1-container">
+    <div class="a1-section-head a1-reveal">
+      <p class="a1-eyebrow">Testimonials</p>
+      <h2 class="a1-section-title">What Our Clients Say</h2>
+      <p class="a1-section-sub">Real feedback from A-1 Fantasybar clients.</p>
+      <div class="a1-rule"></div>
+    </div>
+    <!-- Testimonials render from the a1Testimonials array in the <script>
+         near the bottom of the page — edit that array (name/review/rating)
+         to swap in real client reviews. Nothing here needs to change. -->
+    <div class="a1-testimonial-grid" id="a1TestimonialGrid"></div>
+  </div>
+</section>
+
 <!-- ============ BOOKING ============ -->
 <section class="a1-section a1-section-alt" id="booking">
   <div class="a1-container">
@@ -1183,33 +1472,72 @@ COPY STARTS HERE
 <section class="a1-section" id="a1-policies">
   <div class="a1-container">
     <div class="a1-section-head a1-reveal">
-      <p class="a1-eyebrow">Please Review</p>
+      <p class="a1-eyebrow">Policies</p>
       <h2 class="a1-section-title">Please Read Before Your Appointment</h2>
+      <p class="a1-section-sub">A quick guide to how appointments, deposits, and hair prep work at A-1 Fantasybar — please review before booking.</p>
       <div class="a1-rule"></div>
     </div>
 
-    <div class="a1-policy-banner a1-reveal">NO-DEPOSIT = NO APPOINTMENT!!!</div>
+    <div class="a1-policy-alert a1-reveal">
+      <svg class="a1-policy-alert-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+        <circle cx="12" cy="12" r="9"/>
+        <line x1="12" y1="7.5" x2="12" y2="13"/>
+        <circle class="a1-icon-fill" cx="12" cy="16.3" r="0.9"/>
+      </svg>
+      <span class="a1-policy-alert-text">NO-DEPOSIT = NO APPOINTMENT!!!</span>
+    </div>
 
     <div class="a1-policy-grid">
       <div class="a1-policy-card a1-reveal">
-        <h3>Deposit &amp; Cancellation</h3>
+        <div class="a1-policy-card-head">
+          <svg class="a1-policy-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <rect x="3" y="6" width="18" height="12" rx="2.2"/>
+            <line x1="3" y1="10.3" x2="21" y2="10.3"/>
+          </svg>
+          <h3>Deposits &amp; Payments</h3>
+        </div>
         <ul>
           <li>A <strong>$25 deposit</strong> is required to secure your appointment.</li>
           <li>Paying via Cash App: <strong>$27.00</strong>.</li>
           <li>Deposits are <strong>non-refundable</strong>.</li>
-          <li><strong>24-hour notice</strong> is required for cancellations — text <strong>(469) 463-8438</strong>.</li>
           <li>Your deposit is deducted from the service price. The remaining balance is due the day of your appointment.</li>
         </ul>
       </div>
       <div class="a1-policy-card a1-reveal">
-        <h3>Appointment Guidelines</h3>
+        <div class="a1-policy-card-head">
+          <svg class="a1-policy-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <circle cx="12" cy="12" r="9"/>
+            <path d="M12 7v5l3.5 2"/>
+          </svg>
+          <h3>Cancellations</h3>
+        </div>
+        <ul>
+          <li><strong>24-hour notice</strong> is required for cancellations.</li>
+          <li>To cancel, text <strong>(469) 463-8438</strong>.</li>
+        </ul>
+      </div>
+      <div class="a1-policy-card a1-reveal">
+        <div class="a1-policy-card-head">
+          <svg class="a1-policy-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <circle cx="12" cy="8.5" r="3.2"/>
+            <path d="M5.5 19.5c0-3.6 3-6.2 6.5-6.2s6.5 2.6 6.5 6.2"/>
+          </svg>
+          <h3>Appointment Guidelines</h3>
+        </div>
         <ul>
           <li><strong>No kids, no extra people</strong> please!!</li>
           <li>I <strong>do not take down hair</strong>. If a takedown is needed, a <strong>$40 service charge</strong> will be added.</li>
         </ul>
       </div>
       <div class="a1-policy-card a1-reveal">
-        <h3>Hair Drop-Off</h3>
+        <div class="a1-policy-card-head">
+          <svg class="a1-policy-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M12 4.8a1.7 1.7 0 1 1-1.7 1.7"/>
+            <path d="M12 6.5 3 13.5h18z"/>
+            <path d="M6 16.5h12"/>
+          </svg>
+          <h3>Hair Preparation</h3>
+        </div>
         <ul>
           <li>Bundles, wigs, frontals, and closures for customization must be <strong>dropped off 2 days prior</strong> to your appointment.</li>
           <li>Items not dropped off in advance are subject to a <strong>$75 same-day service fee</strong>.</li>
@@ -1419,6 +1747,45 @@ COPY STARTS HERE
       }
     });
   });
+
+  // Testimonials: edit this array to swap in real client reviews — the
+  // section rebuilds itself from these three fields, nothing else to touch.
+  var a1Testimonials = [
+    { name: 'Client Name', review: 'Placeholder review — replace with a real client testimonial once you have one.', rating: 5 },
+    { name: 'Client Name', review: 'Placeholder review — replace with a real client testimonial once you have one.', rating: 5 },
+    { name: 'Client Name', review: 'Placeholder review — replace with a real client testimonial once you have one.', rating: 5 }
+  ];
+
+  (function renderTestimonials() {
+    var grid = site.querySelector('#a1TestimonialGrid');
+    if (!grid) return;
+    a1Testimonials.forEach(function (t) {
+      var card = document.createElement('div');
+      card.className = 'a1-testimonial-card a1-reveal';
+      var stars = '';
+      for (var i = 0; i < 5; i++) {
+        stars += '<span class="a1-star' + (i < t.rating ? ' a1-star-filled' : '') + '">★</span>';
+      }
+      var quote = document.createElement('span');
+      quote.className = 'a1-testimonial-quote';
+      quote.setAttribute('aria-hidden', 'true');
+      quote.textContent = '“';
+      var starsRow = document.createElement('div');
+      starsRow.className = 'a1-testimonial-stars';
+      starsRow.innerHTML = stars;
+      var text = document.createElement('p');
+      text.className = 'a1-testimonial-text';
+      text.textContent = t.review;
+      var name = document.createElement('p');
+      name.className = 'a1-testimonial-name';
+      name.textContent = t.name;
+      card.appendChild(quote);
+      card.appendChild(starsRow);
+      card.appendChild(text);
+      card.appendChild(name);
+      grid.appendChild(card);
+    });
+  })();
 
   var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var revealEls = site.querySelectorAll('.a1-reveal, .a1-reveal-scale');
