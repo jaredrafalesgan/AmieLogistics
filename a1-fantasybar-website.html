@@ -443,6 +443,91 @@ COPY STARTS HERE
   50% { transform: translateY(-10px); }
 }
 
+/* Hero floating badge */
+#a1-fantasybar-site .a1-hero-badge {
+  position: absolute;
+  top: -46px;
+  right: 2%;
+  z-index: 3;
+  max-width: 200px;
+  padding: 16px 20px;
+  border-radius: 14px;
+  background: rgba(24,12,19,0.55);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255,79,168,0.4);
+  box-shadow: 0 14px 34px rgba(0,0,0,0.35), 0 0 24px rgba(255,79,168,0.12);
+  animation: a1BadgeFloat 6.5s ease-in-out infinite;
+}
+
+#a1-fantasybar-site .a1-hero-badge-line {
+  font-family: 'Playfair Display', serif;
+  font-style: italic;
+  font-size: 14.5px;
+  line-height: 1.45;
+  color: var(--a1-white);
+  white-space: nowrap;
+}
+
+#a1-fantasybar-site .a1-hero-badge-line.a1-pink-text { color: var(--a1-pink); }
+
+@keyframes a1BadgeFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-9px); }
+}
+
+/* Hero salon-tool line-art decorations */
+#a1-fantasybar-site .a1-hero-deco {
+  position: absolute;
+  z-index: 1;
+  fill: none;
+  stroke: url(#a1-hero-icon-grad);
+  stroke-width: 1.4;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  opacity: 0.4;
+  filter: drop-shadow(0 0 5px rgba(255,79,168,0.4));
+  pointer-events: none;
+}
+
+#a1-fantasybar-site .a1-hero-deco-comb {
+  top: 4%;
+  left: -2%;
+  width: 46px;
+  height: 46px;
+  animation: a1DecoFloat 9s ease-in-out infinite;
+}
+
+#a1-fantasybar-site .a1-hero-deco-scissors {
+  bottom: 10%;
+  left: -6%;
+  width: 38px;
+  height: 38px;
+  animation: a1DecoFloat 10s ease-in-out infinite 1.5s;
+}
+
+@keyframes a1DecoFloat {
+  0%, 100% { transform: translateY(0) rotate(0deg); opacity: 0.4; }
+  50% { transform: translateY(-10px) rotate(-4deg); opacity: 0.55; }
+}
+
+#a1-fantasybar-site .a1-hero-sparkle {
+  position: absolute;
+  z-index: 2;
+  fill: url(#a1-hero-icon-grad);
+  pointer-events: none;
+  animation: a1SparkleTwinkle 3.2s ease-in-out infinite;
+}
+
+#a1-fantasybar-site .a1-hero-sparkle-1 { top: -14px; right: 26%; width: 14px; height: 14px; animation-delay: 0s; }
+#a1-fantasybar-site .a1-hero-sparkle-2 { top: 8%; left: 4%; width: 10px; height: 10px; animation-delay: 1s; }
+#a1-fantasybar-site .a1-hero-sparkle-3 { bottom: 6%; right: -3%; width: 11px; height: 11px; animation-delay: 2s; }
+
+@keyframes a1SparkleTwinkle {
+  0%, 100% { opacity: 0.25; transform: scale(0.85); }
+  50% { opacity: 0.9; transform: scale(1.1); }
+}
+
 /* Reveal animation base */
 #a1-fantasybar-site .a1-reveal {
   opacity: 0;
@@ -842,7 +927,7 @@ COPY STARTS HERE
 #a1-fantasybar-site .a1-policy-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  align-items: start;
+  align-items: stretch;
   gap: 22px;
 }
 
@@ -852,6 +937,10 @@ COPY STARTS HERE
   border-left: 3px solid var(--a1-pink);
   border-radius: 12px;
   padding: 28px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 16px;
   transition: border-color 380ms var(--a1-ease), box-shadow 380ms var(--a1-ease), transform 380ms var(--a1-ease);
 }
 
@@ -865,7 +954,6 @@ COPY STARTS HERE
   display: flex;
   align-items: center;
   gap: 12px;
-  margin-bottom: 16px;
 }
 
 #a1-fantasybar-site .a1-policy-icon {
@@ -1122,6 +1210,10 @@ COPY STARTS HERE
   #a1-fantasybar-site .a1-hero-actions { justify-content: center; }
   #a1-fantasybar-site .a1-hero-visual { width: 68%; max-width: 320px; align-self: center; margin-top: 24px; }
   #a1-fantasybar-site .a1-hero-video { opacity: 0.12; }
+  #a1-fantasybar-site .a1-hero-deco-scissors { display: none; }
+  #a1-fantasybar-site .a1-hero-badge { top: -36px; right: -6px; max-width: 168px; padding: 12px 16px; }
+  #a1-fantasybar-site .a1-hero-badge-line { font-size: 12.5px; }
+  #a1-fantasybar-site .a1-hero-sparkle-2 { display: none; }
 }
 
 @media (max-width: 640px) {
@@ -1129,6 +1221,10 @@ COPY STARTS HERE
   #a1-fantasybar-site .a1-hero-actions .a1-btn { width: 100%; }
   #a1-fantasybar-site .a1-hero-actions { flex-direction: column; }
   #a1-fantasybar-site .a1-hero-visual { width: 78%; max-width: 260px; }
+  #a1-fantasybar-site .a1-hero-deco-comb { display: none; }
+  #a1-fantasybar-site .a1-hero-sparkle-1,
+  #a1-fantasybar-site .a1-hero-sparkle-3 { display: none; }
+  #a1-fantasybar-site .a1-hero-badge { top: -30px; right: 0; left: 0; margin: 0 auto; max-width: 200px; text-align: center; }
   #a1-fantasybar-site .a1-policy-banner,
   #a1-fantasybar-site .a1-policy-alert-text { font-size: 17px; }
   #a1-fantasybar-site .a1-logo-img { height: 40px; }
@@ -1188,6 +1284,15 @@ COPY STARTS HERE
 
 <!-- ============ HERO ============ -->
 <section class="a1-hero" id="a1-top">
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+    <defs>
+      <linearGradient id="a1-hero-icon-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stop-color="#ff9fd0"/>
+        <stop offset="50%" stop-color="#ff4fa8"/>
+        <stop offset="100%" stop-color="#c92e86"/>
+      </linearGradient>
+    </defs>
+  </svg>
   <video class="a1-hero-video" autoplay muted loop playsinline preload="auto" aria-hidden="true">
     <source src="https://raw.githubusercontent.com/jaredrafalesgan/AmieLogistics/18286d9dff2678c82c21b160ae11c387a37fc4c9/assets/a1-hero-video.mp4" type="video/mp4">
   </video>
@@ -1205,7 +1310,29 @@ COPY STARTS HERE
     <div class="a1-hero-visual a1-reveal-scale">
       <div class="a1-hero-visual-glow" aria-hidden="true"></div>
       <div class="a1-hero-ring" aria-hidden="true"></div>
+
+      <svg class="a1-hero-deco a1-hero-deco-comb" viewBox="0 0 40 40" aria-hidden="true">
+        <path d="M6 11 H34"/>
+        <path d="M9 11 V25 M14 11 V22 M19 11 V26 M24 11 V22 M29 11 V25"/>
+      </svg>
+      <svg class="a1-hero-deco a1-hero-deco-scissors" viewBox="0 0 36 36" aria-hidden="true">
+        <circle cx="7" cy="8" r="3.2"/>
+        <circle cx="7" cy="26" r="3.2"/>
+        <path d="M9.5 10 L30 24"/>
+        <path d="M9.5 24 L30 10"/>
+      </svg>
+
+      <svg class="a1-hero-sparkle a1-hero-sparkle-1" viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1 L11.6 8.4 L19 10 L11.6 11.6 L10 19 L8.4 11.6 L1 10 L8.4 8.4 Z"/></svg>
+      <svg class="a1-hero-sparkle a1-hero-sparkle-2" viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1 L11.6 8.4 L19 10 L11.6 11.6 L10 19 L8.4 11.6 L1 10 L8.4 8.4 Z"/></svg>
+      <svg class="a1-hero-sparkle a1-hero-sparkle-3" viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1 L11.6 8.4 L19 10 L11.6 11.6 L10 19 L8.4 11.6 L1 10 L8.4 8.4 Z"/></svg>
+
       <img class="a1-hero-img" src="https://raw.githubusercontent.com/jaredrafalesgan/AmieLogistics/9b5604272edaa40127c5309ceade91f339d7f6d6/assets/a1-hero.png" alt="A-1 Fantasybar stylist">
+
+      <div class="a1-hero-badge">
+        <p class="a1-hero-badge-line">Your Hair.</p>
+        <p class="a1-hero-badge-line">Your Confidence.</p>
+        <p class="a1-hero-badge-line a1-pink-text">Your Moment.</p>
+      </div>
     </div>
   </div>
 </section>
@@ -1338,6 +1465,7 @@ COPY STARTS HERE
           <div class="a1-service-meta">
             <span>⏱ 2 hours</span>
           </div>
+          <p class="a1-service-desc">Professional wig installation designed for a secure, seamless, and natural-looking finish.</p>
           <a href="#booking" class="a1-btn a1-btn-outline a1-service-book a1-book-btn">Book Now</a>
         </div>
       </div>
@@ -1651,8 +1779,22 @@ COPY STARTS HERE
       if (parseFloat(cs.paddingRight) > 0) el.style.setProperty('padding-right', '0', 'important');
       if (cs.marginLeft === 'auto' || parseFloat(cs.marginLeft) > 0) el.style.setProperty('margin-left', '0', 'important');
       if (cs.marginRight === 'auto' || parseFloat(cs.marginRight) > 0) el.style.setProperty('margin-right', '0', 'important');
+      // Only strip top spacing on ancestors that have nothing before this
+      // site in the page (so we don't yank spacing above unrelated content
+      // when this snippet isn't the first thing on the page).
+      if (!el.previousElementSibling) {
+        if (parseFloat(cs.marginTop) > 0) el.style.setProperty('margin-top', '0', 'important');
+        if (parseFloat(cs.paddingTop) > 0) el.style.setProperty('padding-top', '0', 'important');
+      }
       el = el.parentElement;
     }
+    // Common real culprit: the page builder's own body/html default spacing.
+    [document.documentElement, document.body].forEach(function (node) {
+      if (!node) return;
+      var cs = window.getComputedStyle(node);
+      if (parseFloat(cs.marginTop) > 0) node.style.setProperty('margin-top', '0', 'important');
+      if (parseFloat(cs.paddingTop) > 0) node.style.setProperty('padding-top', '0', 'important');
+    });
   })();
 
   var yearEl = site.querySelector('#a1Year');
