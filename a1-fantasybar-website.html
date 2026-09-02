@@ -443,39 +443,6 @@ COPY STARTS HERE
   50% { transform: translateY(-10px); }
 }
 
-/* Hero floating badge */
-#a1-fantasybar-site .a1-hero-badge {
-  position: absolute;
-  top: -46px;
-  right: 2%;
-  z-index: 3;
-  max-width: 200px;
-  padding: 16px 20px;
-  border-radius: 14px;
-  background: rgba(24,12,19,0.55);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(255,79,168,0.4);
-  box-shadow: 0 14px 34px rgba(0,0,0,0.35), 0 0 24px rgba(255,79,168,0.12);
-  animation: a1BadgeFloat 6.5s ease-in-out infinite;
-}
-
-#a1-fantasybar-site .a1-hero-badge-line {
-  font-family: 'Playfair Display', serif;
-  font-style: italic;
-  font-size: 14.5px;
-  line-height: 1.45;
-  color: var(--a1-white);
-  white-space: nowrap;
-}
-
-#a1-fantasybar-site .a1-hero-badge-line.a1-pink-text { color: var(--a1-pink); }
-
-@keyframes a1BadgeFloat {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-9px); }
-}
-
 /* Hero salon-tool line-art decorations */
 #a1-fantasybar-site .a1-hero-deco {
   position: absolute;
@@ -1211,8 +1178,6 @@ COPY STARTS HERE
   #a1-fantasybar-site .a1-hero-visual { width: 68%; max-width: 320px; align-self: center; margin-top: 24px; }
   #a1-fantasybar-site .a1-hero-video { opacity: 0.12; }
   #a1-fantasybar-site .a1-hero-deco-scissors { display: none; }
-  #a1-fantasybar-site .a1-hero-badge { top: -36px; right: -6px; max-width: 168px; padding: 12px 16px; }
-  #a1-fantasybar-site .a1-hero-badge-line { font-size: 12.5px; }
   #a1-fantasybar-site .a1-hero-sparkle-2 { display: none; }
 }
 
@@ -1224,7 +1189,6 @@ COPY STARTS HERE
   #a1-fantasybar-site .a1-hero-deco-comb { display: none; }
   #a1-fantasybar-site .a1-hero-sparkle-1,
   #a1-fantasybar-site .a1-hero-sparkle-3 { display: none; }
-  #a1-fantasybar-site .a1-hero-badge { top: -30px; right: 0; left: 0; margin: 0 auto; max-width: 200px; text-align: center; }
   #a1-fantasybar-site .a1-policy-banner,
   #a1-fantasybar-site .a1-policy-alert-text { font-size: 17px; }
   #a1-fantasybar-site .a1-logo-img { height: 40px; }
@@ -1327,12 +1291,6 @@ COPY STARTS HERE
       <svg class="a1-hero-sparkle a1-hero-sparkle-3" viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1 L11.6 8.4 L19 10 L11.6 11.6 L10 19 L8.4 11.6 L1 10 L8.4 8.4 Z"/></svg>
 
       <img class="a1-hero-img" src="https://raw.githubusercontent.com/jaredrafalesgan/AmieLogistics/9b5604272edaa40127c5309ceade91f339d7f6d6/assets/a1-hero.png" alt="A-1 Fantasybar stylist">
-
-      <div class="a1-hero-badge">
-        <p class="a1-hero-badge-line">Your Hair.</p>
-        <p class="a1-hero-badge-line">Your Confidence.</p>
-        <p class="a1-hero-badge-line a1-pink-text">Your Moment.</p>
-      </div>
     </div>
   </div>
 </section>
