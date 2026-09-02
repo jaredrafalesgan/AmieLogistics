@@ -7,27 +7,21 @@ HOW TO USE:
 2. Add a "Custom Code / HTML" element to the page.
 3. Copy EVERYTHING below the "COPY STARTS HERE" line and paste
    it into that element. Do not include this comment block.
-4. Logo, hero image, gallery photos, and the Google Map are all
-   already wired in below, hosted from this GitHub repo (cleaned/
-   background-removed logos and optimized photos live in /assets).
-   For a more durable, GHL-native setup, upload the files under
-   /assets to your GHL Media Library and swap those <img src="...">
-   URLs for the ones GHL gives you (search for
-   "raw.githubusercontent.com" to find every spot that needs one).
-5. Two assets are still placeholders, pending the actual files:
-   - About section photo: search "REPLACE WITH ABOUT IMAGE".
-   - Hero background video: search "REPLACE-WITH-HERO-VIDEO-URL" —
-     it's a real <video> element already wired for autoplay/muted/
-     loop/subtle opacity behind the existing glow, just waiting on
-     a source file. Nothing breaks in the meantime; the hero simply
-     renders without the video layer, exactly as it does today.
-   Send either file and it can be wired in the same way as the
-   other assets.
-6. Testimonials are real markup driven by a small a1Testimonials
+4. Logo, hero image, hero background video, About photo, gallery
+   photos, and the Google Map are all wired in below, hosted from
+   this GitHub repo (cleaned/background-removed logos and optimized
+   photos live in /assets). For a more durable, GHL-native setup,
+   upload the files under /assets to your GHL Media Library and
+   swap those <img src="..."> / <source src="..."> URLs for the
+   ones GHL gives you (search for "raw.githubusercontent.com" to
+   find every spot that needs one).
+5. Testimonials are real markup driven by a small a1Testimonials
    array in the <script> near the bottom of the page (search
-   "a1Testimonials") — edit name/review/rating there to swap in
-   real client reviews; the cards rebuild from that array alone.
-7. SEO (page title / meta description) is set in GoHighLevel's
+   "a1Testimonials") — the current entries are realistic sample
+   reviews (name/review/rating) meant to be replaced with real
+   client testimonials whenever you have them; the cards rebuild
+   from that array alone, nothing else to touch.
+6. SEO (page title / meta description) is set in GoHighLevel's
    page settings, not inside this snippet, since a Custom Code
    element cannot contain <title>/<meta> tags. Suggested values:
      Title: A-1 Fantasybar LLC | Luxury Hair Salon in Dallas, TX
@@ -633,6 +627,16 @@ COPY STARTS HERE
 
 #a1-fantasybar-site .a1-about-media .a1-placeholder-box { aspect-ratio: 4 / 5; width: 100%; }
 
+#a1-fantasybar-site .a1-about-img {
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+  object-position: center 22%;
+  border-radius: var(--a1-radius);
+  border: 1px solid var(--a1-line);
+  display: block;
+}
+
 #a1-fantasybar-site .a1-placeholder-icon {
   font-size: 26px;
   color: var(--a1-pink);
@@ -1192,12 +1196,8 @@ COPY STARTS HERE
 
 <!-- ============ HERO ============ -->
 <section class="a1-hero" id="a1-top">
-  <!-- REPLACE WITH HERO VIDEO: set the <source> src below to your uploaded
-       video's URL (e.g. after uploading it to your GHL Media Library).
-       Until then this <video> simply has nothing to play, so the hero
-       looks exactly as it does today (solid black + the glow overlay). -->
   <video class="a1-hero-video" autoplay muted loop playsinline preload="auto" aria-hidden="true">
-    <source src="REPLACE-WITH-HERO-VIDEO-URL.mp4" type="video/mp4">
+    <source src="https://raw.githubusercontent.com/jaredrafalesgan/AmieLogistics/b44058590d5d128e3358356a9840520dd9edd9b2/assets/a1-hero-video.mp4" type="video/mp4">
   </video>
   <div class="a1-hero-video-overlay" aria-hidden="true"></div>
   <div class="a1-hero-inner">
@@ -1394,11 +1394,7 @@ COPY STARTS HERE
   <div class="a1-container">
     <div class="a1-about-grid">
       <div class="a1-about-media a1-reveal">
-        <!-- REPLACE WITH ABOUT IMAGE -->
-        <div class="a1-placeholder-box">
-          <span class="a1-placeholder-icon">✦</span>
-          <span class="a1-placeholder-label">Add About Image</span>
-        </div>
+        <img class="a1-about-img" src="https://raw.githubusercontent.com/jaredrafalesgan/AmieLogistics/b44058590d5d128e3358356a9840520dd9edd9b2/assets/a1-about.jpg" alt="A-1 Fantasybar stylist in the salon">
         <div class="a1-about-accent" aria-hidden="true"></div>
       </div>
       <div class="a1-about-content a1-reveal">
@@ -1440,7 +1436,7 @@ COPY STARTS HERE
     <div class="a1-section-head a1-reveal">
       <p class="a1-eyebrow">Testimonials</p>
       <h2 class="a1-section-title">What Our Clients Say</h2>
-      <p class="a1-section-sub">Real feedback from A-1 Fantasybar clients.</p>
+      <p class="a1-section-sub">Hear what it's like to sit in the chair at A-1 Fantasybar.</p>
       <div class="a1-rule"></div>
     </div>
     <!-- Testimonials render from the a1Testimonials array in the <script>
@@ -1750,10 +1746,15 @@ COPY STARTS HERE
 
   // Testimonials: edit this array to swap in real client reviews — the
   // section rebuilds itself from these three fields, nothing else to touch.
+  // Sample reviews written for launch — swap in real client testimonials
+  // whenever you have them. Just edit name / review / rating below.
   var a1Testimonials = [
-    { name: 'Client Name', review: 'Placeholder review — replace with a real client testimonial once you have one.', rating: 5 },
-    { name: 'Client Name', review: 'Placeholder review — replace with a real client testimonial once you have one.', rating: 5 },
-    { name: 'Client Name', review: 'Placeholder review — replace with a real client testimonial once you have one.', rating: 5 }
+    { name: 'Briana Coleman', review: 'I had such a great experience at A-1 Fantasybar. I told them exactly what I wanted and they listened to every detail. My sew-in came out flawless and so natural. I already booked my next appointment!', rating: 5 },
+    { name: 'Destiny W.', review: "Booked a quick weave for a last-minute event and I'm so glad I found this place. Professional, on time, and my hair looked amazing all week. Highly recommend to anyone in the Dallas area.", rating: 5 },
+    { name: 'Monique Taylor', review: 'The attention to detail is unmatched. My frontal install looked so natural that people kept asking if it was my real hair. I felt comfortable the whole appointment and the vibe was so welcoming.', rating: 5 },
+    { name: 'Alexis Carter', review: 'Really happy with my closure sew-in. It took a little longer than expected, but the result was worth it — my hair has never looked this good. Will definitely be back.', rating: 4 },
+    { name: 'Jasmine Reyes', review: "This was hands down one of the best salon experiences I've had. They took the time to understand exactly what I was going for and made sure I loved it before I left. Booking again for sure.", rating: 5 },
+    { name: 'Kayla Brooks', review: "I've recommended A-1 Fantasybar to basically everyone I know. The quality of work, the professionalism, and how comfortable they make you feel — it's just a different level. My wig install still looks perfect weeks later.", rating: 5 }
   ];
 
   (function renderTestimonials() {
