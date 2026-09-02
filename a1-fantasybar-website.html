@@ -7,12 +7,13 @@ HOW TO USE:
 2. Add a "Custom Code / HTML" element to the page.
 3. Copy EVERYTHING below the "COPY STARTS HERE" line and paste
    it into that element. Do not include this comment block.
-4. Replace the two image placeholders (search for "REPLACE-WITH"):
-   - REPLACE-WITH-LOGO-URL   -> your hosted logo image URL
-   - REPLACE-WITH-HERO-URL   -> your hosted hero image URL
-   Upload the logo/hero image to the GHL Media Library (or any
-   image host), copy the resulting URL, and paste it in place of
-   each placeholder string.
+4. Logo and hero image are already wired in below, hosted from
+   this GitHub repo (background-removed/cleaned versions live in
+   /assets). For a more durable, GHL-native setup, upload
+   /assets/a1-logo-horizontal.png and /assets/a1-hero.png to your
+   GHL Media Library and swap those two <img src="..."> URLs for
+   the ones GHL gives you (search for "raw.githubusercontent.com"
+   to find both spots).
 5. If you want a Google Map embed, replace the
    "REPLACE WITH GOOGLE MAP" placeholder block with a verified
    Google Maps <iframe> embed for your address.
@@ -314,60 +315,33 @@ COPY STARTS HERE
   display: flex;
   align-items: center;
   overflow: hidden;
+  padding: 148px 0 64px;
+  background:
+    radial-gradient(ellipse 60% 55% at 82% 88%, rgba(255,79,168,0.22) 0%, rgba(255,79,168,0) 70%),
+    radial-gradient(ellipse 50% 45% at 8% 15%, rgba(255,79,168,0.10) 0%, rgba(255,79,168,0) 70%),
+    var(--a1-black);
 }
 
-#a1-fantasybar-site .a1-hero-media {
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-}
-
-#a1-fantasybar-site .a1-hero-img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center 20%;
-  transform: scale(1.08);
-  animation: a1HeroZoom 18s ease-in-out infinite alternate;
-}
-
-@keyframes a1HeroZoom {
-  from { transform: scale(1.08); }
-  to { transform: scale(1.14); }
-}
-
-#a1-fantasybar-site .a1-hero-overlay {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(180deg, rgba(10,10,11,0.55) 0%, rgba(10,10,11,0.55) 30%, rgba(10,10,11,0.92) 100%), linear-gradient(90deg, rgba(10,10,11,0.85) 0%, rgba(10,10,11,0.35) 48%, rgba(10,10,11,0.2) 100%);
-}
-
-#a1-fantasybar-site .a1-hero-glow {
-  position: absolute;
-  width: 520px;
-  height: 520px;
-  right: -120px;
-  top: -80px;
-  background: radial-gradient(circle, rgba(255,79,168,0.35) 0%, rgba(255,79,168,0) 70%);
-  filter: blur(10px);
-  pointer-events: none;
-}
-
-#a1-fantasybar-site .a1-hero-content {
+#a1-fantasybar-site .a1-hero-inner {
   position: relative;
   z-index: 2;
   max-width: 1200px;
   margin: 0 auto;
   padding: 0 24px;
   width: 100%;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 40px;
 }
 
-#a1-fantasybar-site .a1-hero-content > * {
-  max-width: 620px;
+#a1-fantasybar-site .a1-hero-content {
+  max-width: 560px;
+  padding-bottom: 24px;
 }
 
 #a1-fantasybar-site .a1-hero-title {
-  font-size: clamp(40px, 7vw, 78px);
+  font-size: clamp(40px, 6.4vw, 74px);
   line-height: 1.05;
   margin-bottom: 22px;
   text-transform: uppercase;
@@ -384,6 +358,56 @@ COPY STARTS HERE
   display: flex;
   gap: 16px;
   flex-wrap: wrap;
+}
+
+#a1-fantasybar-site .a1-hero-visual {
+  position: relative;
+  flex-shrink: 0;
+  width: 40%;
+  max-width: 460px;
+  align-self: flex-end;
+}
+
+#a1-fantasybar-site .a1-hero-visual-glow {
+  position: absolute;
+  width: 130%;
+  padding-bottom: 130%;
+  left: 50%;
+  bottom: -6%;
+  transform: translateX(-50%);
+  background: radial-gradient(circle, rgba(255,79,168,0.32) 0%, rgba(255,79,168,0) 68%);
+  filter: blur(6px);
+  pointer-events: none;
+  z-index: 0;
+}
+
+#a1-fantasybar-site .a1-hero-ring {
+  position: absolute;
+  width: 78%;
+  aspect-ratio: 1 / 1;
+  left: 50%;
+  bottom: 4%;
+  transform: translateX(-50%);
+  border: 1px solid rgba(255,79,168,0.35);
+  border-radius: 50%;
+  z-index: 0;
+  pointer-events: none;
+}
+
+#a1-fantasybar-site .a1-hero-img {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: contain;
+  filter: drop-shadow(0 30px 44px rgba(0,0,0,0.55));
+  animation: a1HeroFloat 7s ease-in-out infinite;
+}
+
+@keyframes a1HeroFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
 }
 
 /* Reveal animation base */
@@ -823,9 +847,10 @@ COPY STARTS HERE
   margin-bottom: 48px;
 }
 
-#a1-fantasybar-site .a1-footer-brand-name {
-  font-size: 22px;
-  margin-bottom: 12px;
+#a1-fantasybar-site .a1-footer-logo {
+  height: 44px;
+  width: auto;
+  margin-bottom: 14px;
 }
 
 #a1-fantasybar-site .a1-footer-tag {
@@ -876,14 +901,19 @@ COPY STARTS HERE
   #a1-fantasybar-site .a1-contact-grid { grid-template-columns: 1fr; gap: 40px; }
   #a1-fantasybar-site .a1-footer-grid { grid-template-columns: 1fr; gap: 32px; }
   #a1-fantasybar-site .a1-gallery-grid { grid-template-columns: repeat(2, 1fr); grid-auto-rows: 160px; }
+  #a1-fantasybar-site .a1-hero { min-height: 0; padding: 128px 0 0; }
+  #a1-fantasybar-site .a1-hero-inner { flex-direction: column; align-items: center; text-align: center; gap: 8px; }
+  #a1-fantasybar-site .a1-hero-content { max-width: 560px; padding-bottom: 0; }
+  #a1-fantasybar-site .a1-hero-sub { margin-left: auto; margin-right: auto; }
+  #a1-fantasybar-site .a1-hero-actions { justify-content: center; }
+  #a1-fantasybar-site .a1-hero-visual { width: 68%; max-width: 320px; align-self: center; margin-top: 24px; }
 }
 
 @media (max-width: 640px) {
   #a1-fantasybar-site .a1-section { padding: 64px 0; }
-  #a1-fantasybar-site .a1-hero { min-height: 84vh; }
-  #a1-fantasybar-site .a1-hero-img { object-position: center 30%; }
   #a1-fantasybar-site .a1-hero-actions .a1-btn { width: 100%; }
   #a1-fantasybar-site .a1-hero-actions { flex-direction: column; }
+  #a1-fantasybar-site .a1-hero-visual { width: 78%; max-width: 260px; }
   #a1-fantasybar-site .a1-policy-banner { font-size: 17px; }
   #a1-fantasybar-site .a1-logo-img { height: 40px; }
 }
@@ -894,7 +924,7 @@ COPY STARTS HERE
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
   }
-  #a1-fantasybar-site .a1-hero-img { transform: none; }
+  #a1-fantasybar-site .a1-hero-img { animation: none; }
 }
 </style>
 
@@ -908,7 +938,7 @@ COPY STARTS HERE
   <div class="a1-header-inner">
     <a href="#a1-top" class="a1-logo-link" aria-label="A-1 Fantasybar LLC Home">
       <!-- REPLACE WITH LOGO IMAGE -->
-      <img class="a1-logo-img" src="REPLACE-WITH-LOGO-URL" alt="A-1 Fantasybar LLC logo">
+      <img class="a1-logo-img" src="https://raw.githubusercontent.com/jaredrafalesgan/AmieLogistics/claude/a1-fantasybar-website-mgj8y6/assets/a1-logo-horizontal.png" alt="A-1 Fantasybar LLC logo">
     </a>
     <nav class="a1-nav" aria-label="Primary">
       <a href="#a1-top" class="a1-nav-link">Home</a>
@@ -938,19 +968,20 @@ COPY STARTS HERE
 
 <!-- ============ HERO ============ -->
 <section class="a1-hero" id="a1-top">
-  <div class="a1-hero-media">
-    <!-- REPLACE WITH HERO IMAGE -->
-    <img class="a1-hero-img" src="REPLACE-WITH-HERO-URL" alt="A-1 Fantasybar stylist standing with professional hair care products">
-    <div class="a1-hero-overlay"></div>
-    <div class="a1-hero-glow"></div>
-  </div>
-  <div class="a1-hero-content">
-    <p class="a1-eyebrow a1-reveal">Where Beauty Meets Confidence</p>
-    <h1 class="a1-hero-title a1-reveal">UNLEASH YOUR <span class="a1-pink-text">BEAUTY</span></h1>
-    <p class="a1-hero-sub a1-reveal">Luxury hair services crafted with precision, care, and creativity to help you look and feel your best.</p>
-    <div class="a1-hero-actions a1-reveal">
-      <a href="#booking" class="a1-btn a1-btn-primary a1-book-btn">Book Your Appointment</a>
-      <a href="#a1-services" class="a1-btn a1-btn-outline">Explore Services</a>
+  <div class="a1-hero-inner">
+    <div class="a1-hero-content">
+      <p class="a1-eyebrow a1-reveal">Where Beauty Meets Confidence</p>
+      <h1 class="a1-hero-title a1-reveal">UNLEASH YOUR <span class="a1-pink-text">BEAUTY</span></h1>
+      <p class="a1-hero-sub a1-reveal">Luxury hair services crafted with precision, care, and creativity to help you look and feel your best.</p>
+      <div class="a1-hero-actions a1-reveal">
+        <a href="#booking" class="a1-btn a1-btn-primary a1-book-btn">Book Your Appointment</a>
+        <a href="#a1-services" class="a1-btn a1-btn-outline">Explore Services</a>
+      </div>
+    </div>
+    <div class="a1-hero-visual a1-reveal-scale">
+      <div class="a1-hero-visual-glow" aria-hidden="true"></div>
+      <div class="a1-hero-ring" aria-hidden="true"></div>
+      <img class="a1-hero-img" src="https://raw.githubusercontent.com/jaredrafalesgan/AmieLogistics/claude/a1-fantasybar-website-mgj8y6/assets/a1-hero.png" alt="A-1 Fantasybar stylist">
     </div>
   </div>
 </section>
@@ -1249,7 +1280,7 @@ COPY STARTS HERE
   <div class="a1-container">
     <div class="a1-footer-grid">
       <div>
-        <h4 class="a1-footer-brand-name">A-1 Fantasybar LLC</h4>
+        <img class="a1-footer-logo" src="https://raw.githubusercontent.com/jaredrafalesgan/AmieLogistics/claude/a1-fantasybar-website-mgj8y6/assets/a1-logo-horizontal.png" alt="A-1 Fantasybar LLC logo">
         <p class="a1-footer-tag">Luxury hair services in Dallas, Texas.</p>
       </div>
       <div>
