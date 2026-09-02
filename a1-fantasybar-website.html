@@ -7,16 +7,16 @@ HOW TO USE:
 2. Add a "Custom Code / HTML" element to the page.
 3. Copy EVERYTHING below the "COPY STARTS HERE" line and paste
    it into that element. Do not include this comment block.
-4. Logo and hero image are already wired in below, hosted from
-   this GitHub repo (background-removed/cleaned versions live in
-   /assets). For a more durable, GHL-native setup, upload
-   /assets/a1-logo-horizontal.png and /assets/a1-hero.png to your
-   GHL Media Library and swap those two <img src="..."> URLs for
-   the ones GHL gives you (search for "raw.githubusercontent.com"
-   to find both spots).
-5. If you want a Google Map embed, replace the
-   "REPLACE WITH GOOGLE MAP" placeholder block with a verified
-   Google Maps <iframe> embed for your address.
+4. Logo, hero image, gallery photos, and the Google Map are all
+   already wired in below, hosted from this GitHub repo (cleaned/
+   background-removed logos and optimized photos live in /assets).
+   For a more durable, GHL-native setup, upload the files under
+   /assets to your GHL Media Library and swap those <img src="...">
+   URLs for the ones GHL gives you (search for
+   "raw.githubusercontent.com" to find every spot that needs one).
+5. The About section photo is still a placeholder (search for
+   "REPLACE WITH ABOUT IMAGE") — send that image whenever you have
+   one and it can be wired in the same way.
 6. SEO (page title / meta description) is set in GoHighLevel's
    page settings, not inside this snippet, since a Custom Code
    element cannot contain <title>/<meta> tags. Suggested values:
@@ -586,8 +586,9 @@ COPY STARTS HERE
 /* Gallery */
 #a1-fantasybar-site .a1-gallery-grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  grid-auto-rows: 140px;
+  grid-template-columns: repeat(3, 1fr);
+  grid-auto-rows: 220px;
+  grid-auto-flow: dense;
   gap: 14px;
 }
 
@@ -607,6 +608,14 @@ COPY STARTS HERE
   border-style: dashed;
 }
 
+#a1-fantasybar-site .a1-gallery-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 15%;
+  transition: transform 500ms var(--a1-ease);
+}
+
 #a1-fantasybar-site .a1-gallery-item::after {
   content: '';
   position: absolute;
@@ -618,7 +627,8 @@ COPY STARTS HERE
 
 #a1-fantasybar-site .a1-gallery-item:hover::after { opacity: 1; }
 
-#a1-fantasybar-site .a1-gallery-item:hover .a1-placeholder-box {
+#a1-fantasybar-site .a1-gallery-item:hover .a1-placeholder-box,
+#a1-fantasybar-site .a1-gallery-item:hover .a1-gallery-img {
   transform: scale(1.04);
 }
 
@@ -804,7 +814,20 @@ COPY STARTS HERE
 
 #a1-fantasybar-site .a1-hours-row span:last-child { color: var(--a1-white); font-weight: 500; }
 
-#a1-fantasybar-site .a1-map-box { min-height: 340px; height: 100%; }
+#a1-fantasybar-site .a1-map-box {
+  min-height: 340px;
+  height: 100%;
+  border-radius: var(--a1-radius);
+  overflow: hidden;
+  border: 1px solid var(--a1-line);
+}
+
+#a1-fantasybar-site .a1-map-iframe {
+  width: 100%;
+  height: 100%;
+  min-height: 340px;
+  filter: grayscale(0.3) invert(0.92) contrast(0.9);
+}
 
 /* Final CTA */
 #a1-fantasybar-site .a1-final-cta {
@@ -1120,14 +1143,15 @@ COPY STARTS HERE
       <div class="a1-rule"></div>
     </div>
     <div class="a1-gallery-grid">
-      <div class="a1-gallery-item a1-tall a1-reveal-scale"><!-- REPLACE WITH GALLERY IMAGE --><div class="a1-placeholder-box"><span class="a1-placeholder-icon">✦</span><span class="a1-placeholder-label">Wig Install</span></div></div>
-      <div class="a1-gallery-item a1-reveal-scale"><!-- REPLACE WITH GALLERY IMAGE --><div class="a1-placeholder-box"><span class="a1-placeholder-icon">✦</span><span class="a1-placeholder-label">Sew In</span></div></div>
-      <div class="a1-gallery-item a1-reveal-scale"><!-- REPLACE WITH GALLERY IMAGE --><div class="a1-placeholder-box"><span class="a1-placeholder-icon">✦</span><span class="a1-placeholder-label">Frontal</span></div></div>
-      <div class="a1-gallery-item a1-tall a1-reveal-scale"><!-- REPLACE WITH GALLERY IMAGE --><div class="a1-placeholder-box"><span class="a1-placeholder-icon">✦</span><span class="a1-placeholder-label">Closure</span></div></div>
-      <div class="a1-gallery-item a1-reveal-scale"><!-- REPLACE WITH GALLERY IMAGE --><div class="a1-placeholder-box"><span class="a1-placeholder-icon">✦</span><span class="a1-placeholder-label">Quick Weave</span></div></div>
-      <div class="a1-gallery-item a1-tall a1-reveal-scale"><!-- REPLACE WITH GALLERY IMAGE --><div class="a1-placeholder-box"><span class="a1-placeholder-icon">✦</span><span class="a1-placeholder-label">Finished Style</span></div></div>
-      <div class="a1-gallery-item a1-reveal-scale"><!-- REPLACE WITH GALLERY IMAGE --><div class="a1-placeholder-box"><span class="a1-placeholder-icon">✦</span><span class="a1-placeholder-label">Beauty Portrait</span></div></div>
-      <div class="a1-gallery-item a1-reveal-scale"><!-- REPLACE WITH GALLERY IMAGE --><div class="a1-placeholder-box"><span class="a1-placeholder-icon">✦</span><span class="a1-placeholder-label">Wig Install</span></div></div>
+      <div class="a1-gallery-item a1-tall a1-reveal-scale"><img class="a1-gallery-img" src="https://raw.githubusercontent.com/jaredrafalesgan/AmieLogistics/5efd972c4e4a9deeaf75a571ec7bbc4da996040e/assets/gallery/gallery-01.jpg" alt="A-1 Fantasybar client hairstyle" loading="lazy"></div>
+      <div class="a1-gallery-item a1-reveal-scale"><img class="a1-gallery-img" src="https://raw.githubusercontent.com/jaredrafalesgan/AmieLogistics/5efd972c4e4a9deeaf75a571ec7bbc4da996040e/assets/gallery/gallery-02.jpg" alt="A-1 Fantasybar client hairstyle" loading="lazy"></div>
+      <div class="a1-gallery-item a1-reveal-scale"><img class="a1-gallery-img" src="https://raw.githubusercontent.com/jaredrafalesgan/AmieLogistics/5efd972c4e4a9deeaf75a571ec7bbc4da996040e/assets/gallery/gallery-03.jpg" alt="A-1 Fantasybar client hairstyle" loading="lazy"></div>
+      <div class="a1-gallery-item a1-reveal-scale"><img class="a1-gallery-img" src="https://raw.githubusercontent.com/jaredrafalesgan/AmieLogistics/5efd972c4e4a9deeaf75a571ec7bbc4da996040e/assets/gallery/gallery-04.jpg" alt="A-1 Fantasybar client hairstyle" loading="lazy"></div>
+      <div class="a1-gallery-item a1-tall a1-reveal-scale"><img class="a1-gallery-img" src="https://raw.githubusercontent.com/jaredrafalesgan/AmieLogistics/5efd972c4e4a9deeaf75a571ec7bbc4da996040e/assets/gallery/gallery-05.jpg" alt="A-1 Fantasybar client hairstyle" loading="lazy"></div>
+      <div class="a1-gallery-item a1-reveal-scale"><img class="a1-gallery-img" src="https://raw.githubusercontent.com/jaredrafalesgan/AmieLogistics/5efd972c4e4a9deeaf75a571ec7bbc4da996040e/assets/gallery/gallery-06.jpg" alt="A-1 Fantasybar client hairstyle" loading="lazy"></div>
+      <div class="a1-gallery-item a1-reveal-scale"><img class="a1-gallery-img" src="https://raw.githubusercontent.com/jaredrafalesgan/AmieLogistics/5efd972c4e4a9deeaf75a571ec7bbc4da996040e/assets/gallery/gallery-07.jpg" alt="A-1 Fantasybar client hairstyle" loading="lazy"></div>
+      <div class="a1-gallery-item a1-reveal-scale"><img class="a1-gallery-img" src="https://raw.githubusercontent.com/jaredrafalesgan/AmieLogistics/5efd972c4e4a9deeaf75a571ec7bbc4da996040e/assets/gallery/gallery-08.jpg" alt="A-1 Fantasybar client hairstyle" loading="lazy"></div>
+      <div class="a1-gallery-item a1-tall a1-reveal-scale"><img class="a1-gallery-img" src="https://raw.githubusercontent.com/jaredrafalesgan/AmieLogistics/5efd972c4e4a9deeaf75a571ec7bbc4da996040e/assets/gallery/gallery-09.jpg" alt="A-1 Fantasybar client hairstyle" loading="lazy"></div>
     </div>
   </div>
 </section>
@@ -1254,13 +1278,8 @@ COPY STARTS HERE
           </div>
         </div>
       </div>
-      <div class="a1-reveal">
-        <!-- REPLACE WITH GOOGLE MAP -->
-        <div class="a1-placeholder-box a1-map-box">
-          <span class="a1-placeholder-icon">✦</span>
-          <span class="a1-placeholder-label">Add Google Map Embed</span>
-          <p style="font-size:13px;color:var(--a1-white-dim);max-width:220px;">247 W Camp Wisdom Rd., Dallas, TX 75116</p>
-        </div>
+      <div class="a1-reveal a1-map-box">
+        <iframe class="a1-map-iframe" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3358.880869155243!2d-96.91349116646367!3d32.66261420342001!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x864e914dea0d5d0d%3A0xb24b2dbce2f2fcc4!2sA-1%20Fantasybar%20Beauty%20Bar!5e0!3m2!1sen!2sph!4v1788378561279!5m2!1sen!2sph" style="border:0;" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" title="A-1 Fantasybar LLC location map" allowfullscreen></iframe>
       </div>
     </div>
   </div>
